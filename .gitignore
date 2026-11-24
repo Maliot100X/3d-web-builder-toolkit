@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vercel/
+.env
+.env.*
+!.env.example
+qa-screenshots/
+references/
+research/
+*.log
+.DS_Store

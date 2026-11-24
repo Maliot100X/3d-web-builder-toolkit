@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#07080c" />
+    <title>Hyperform — 3D web starter</title>
+    <meta name="description" content="Starter for immersive 3D/animated websites: Three.js shader hero, GSAP ScrollTrigger choreography, Lenis smooth scroll, Tailwind." />
+    <meta property="og:title" content="Hyperform — 3D web starter" />
+    <meta property="og:description" content="Three.js + GSAP + Lenis + Tailwind starter." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Sora:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  </head>
+  <body data-title="HYPERFORM" data-kicker="immersive 3d web studio">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-void">Skip to content</a>
+    <canvas id="stage" aria-hidden="true"></canvas>
+
+    <header class="site-nav fixed inset-x-0 top-0 z-40 flex items-center justify-between px-[clamp(16px,3vw,40px)] py-5">
+      <a href="#top" class="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
+        <span class="size-6 rounded-full bg-gradient-to-br from-cyan to-violet"></span> Hyperform
+      </a>
+      <nav aria-label="Main" class="glass hidden items-center gap-1 rounded-full p-1 text-[12px] font-mono uppercase tracking-[0.12em] md:flex">
+        <a class="rounded-full px-4 py-2 hover:bg-line" href="#work">Work</a>
+        <a class="rounded-full px-4 py-2 hover:bg-line" href="#craft">Craft</a>
+        <a class="rounded-full px-4 py-2 hover:bg-line" href="#numbers">Numbers</a>
+        <a class="rounded-full bg-ink px-4 py-2 text-void" href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="glass rounded-full px-4 py-2 font-mono text-[12px] uppercase tracking-[0.12em] md:hidden">Menu</a>
+    </header>
+
+    <main id="main" class="relative z-10">
+      <!-- HERO ---------------------------------------------------------->
+      <section id="top" class="relative flex min-h-svh flex-col justify-end px-[clamp(16px,3vw,40px)] pb-10">
+        <h1 class="hero-title pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-display text-mega font-bold">HYPERFORM</h1>
+        <div class="hero-copy relative grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+          <p class="max-w-md text-lede text-mute">We build websites that move like products — real-time 3D, shader-driven type and scroll choreography, tuned to 60&nbsp;fps on a phone.</p>
+          <div class="flex gap-3">
+            <a href="#work" class="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-void">
+              See work <i data-lucide="arrow-right" class="size-4 transition-transform group-hover:translate-x-1"></i>
+            </a>
+            <a href="#contact" class="glass inline-flex items-center gap-2 rounded-full px-5 py-3 font-mono text-[12px] uppercase tracking-[0.12em]">
+              Start a project <i data-lucide="sparkles" class="size-4"></i>
+            </a>
+          </div>
+        </div>
+        <div class="scroll-cue mt-10 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mute">
+          <i data-lucide="mouse-pointer-2" class="size-3.5"></i> Move to make ripples · scroll to morph
+        </div>
+      </section>
+
+      <!-- MANIFESTO ----------------------------------------------------->
+      <section class="mx-auto max-w-6xl px-[clamp(16px,3vw,40px)] py-[22vh]">
+        <p class="mb-8 font-mono text-[12px] uppercase tracking-[0.18em] text-cyan">(01) Manifesto</p>
+        <p data-split-scrub class="font-display text-display font-semibold">
+          Every pixel earns its motion. We sculpt scenes in Three.js, write the shaders by hand, and choreograph scroll so the story unfolds at the speed you read it.
+        </p>
+      </section>
+
+      <!-- PINNED HORIZONTAL WORK --------------------------------------->
+      <section id="work" class="h-pin relative overflow-hidden py-16 md:flex md:h-svh md:items-center md:py-0">
+        <div class="h-track flex flex-col gap-6 px-[clamp(16px,3vw,40px)] md:flex-row md:gap-8">
+          <div class="shrink-0 md:w-[32vw]">
+            <p class="mb-4 font-mono text-[12px] uppercase tracking-[0.18em] text-cyan">(02) Selected work</p>
+            <h2 data-split-rise class="font-display text-display font-bold">Built to be touched.</h2>
+          </div>
+          <!-- cards -->
+          <article data-reveal class="glass flex aspect-[4/5] shrink-0 flex-col justify-between rounded-3xl p-6 md:w-[28vw]">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">WebGL · Fluid</span>
+            <div><h3 class="font-display text-3xl font-bold">Liquid Type</h3><p class="mt-2 text-mute">Ripple-refracted headline, ping-pong height field.</p></div>
+          </article>
+          <article data-reveal class="glass flex aspect-[4/5] shrink-0 flex-col justify-between rounded-3xl p-6 md:w-[28vw]">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">Three.js · GLSL</span>
+            <div><h3 class="font-display text-3xl font-bold">Morph Shell</h3><p class="mt-2 text-mute">Simplex-displaced icosahedron with fresnel iridescence.</p></div>
+          </article>
+          <article data-reveal class="glass flex aspect-[4/5] shrink-0 flex-col justify-between rounded-3xl p-6 md:w-[28vw]">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">WebGL2 · Mesh warp</span>
+            <div><h3 class="font-display text-3xl font-bold">Taffy Face</h3><p class="mt-2 text-mute">Grab-and-stretch portrait with damped springs.</p></div>
+          </article>
+          <article data-reveal class="glass flex aspect-[4/5] shrink-0 flex-col justify-between rounded-3xl p-6 md:w-[28vw]">
+            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">R3F · glTF</span>
+            <div><h3 class="font-display text-3xl font-bold">Product Orbit</h3><p class="mt-2 text-mute">Scroll-scrubbed model with studio lightformers.</p></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- MARQUEE ------------------------------------------------------->
+      <div class="border-y border-line py-6" aria-hidden="true">
+        <div class="overflow-hidden">
+          <div class="marquee-inner gap-12 whitespace-nowrap font-display text-5xl font-bold uppercase text-ink/80 md:text-7xl">
+            <span>Three.js ✦ GSAP ✦ Lenis ✦ GLSL ✦ Tailwind ✦ WebGL2 ✦</span>
+            <span>Three.js ✦ GSAP ✦ Lenis ✦ GLSL ✦ Tailwind ✦ WebGL2 ✦</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRAFT GRID ---------------------------------------------------->
+      <section id="craft" class="mx-auto max-w-6xl px-[clamp(16px,3vw,40px)] py-[18vh]">
+        <p class="mb-4 font-mono text-[12px] uppercase tracking-[0.18em] text-cyan">(03) Craft</p>
+        <h2 data-split-rise class="mb-12 max-w-3xl font-display text-display font-bold">Fast, accessible, and a little bit alive.</h2>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div data-reveal class="glass rounded-2xl p-6"><i data-lucide="box" class="mb-6 size-6 text-cyan"></i><h3 class="font-display text-xl font-bold">Real-time 3D</h3><p class="mt-2 text-sm text-mute">Three.js scenes with capped DPR and disposal on teardown.</p></div>
+          <div data-reveal class="glass rounded-2xl p-6"><i data-lucide="waves" class="mb-6 size-6 text-cyan"></i><h3 class="font-display text-xl font-bold">Shader craft</h3><p class="mt-2 text-sm text-mute">Hand-written GLSL: ripples, noise, fresnel, palettes.</p></div>
+          <div data-reveal class="glass rounded-2xl p-6"><i data-lucide="gauge" class="mb-6 size-6 text-cyan"></i><h3 class="font-display text-xl font-bold">60 fps budget</h3><p class="mt-2 text-sm text-mute">Transforms only, batched triggers, paused when hidden.</p></div>
+          <div data-reveal class="glass rounded-2xl p-6"><i data-lucide="accessibility" class="mb-6 size-6 text-cyan"></i><h3 class="font-display text-xl font-bold">Motion-safe</h3><p class="mt-2 text-sm text-mute">prefers-reduced-motion gets a calm, complete page.</p></div>
+        </div>
+      </section>
+
+      <!-- NUMBERS ------------------------------------------------------->
+      <section id="numbers" class="mx-auto grid max-w-6xl gap-10 px-[clamp(16px,3vw,40px)] pb-[18vh] md:grid-cols-3">
+        <div data-reveal><p class="font-display text-7xl font-bold"><span data-count="60">60</span><span class="text-cyan">fps</span></p><p class="mt-2 font-mono text-[12px] uppercase tracking-[0.14em] text-mute">Target on mid-range phones</p></div>
+        <div data-reveal><p class="font-display text-7xl font-bold"><span data-count="9">9</span><span class="text-cyan">phases</span></p><p class="mt-2 font-mono text-[12px] uppercase tracking-[0.14em] text-mute">Brief → Vercel, no skipped steps</p></div>
+        <div data-reveal><p class="font-display text-7xl font-bold"><span data-count="0">0</span><span class="text-cyan">errors</span></p><p class="mt-2 font-mono text-[12px] uppercase tracking-[0.14em] text-mute">Console errors allowed at ship</p></div>
+      </section>
+
+      <!-- CONTACT ------------------------------------------------------->
+      <section id="contact" class="relative flex min-h-svh flex-col justify-between px-[clamp(16px,3vw,40px)] pt-[16vh] pb-8">
+        <div>
+          <p class="mb-4 font-mono text-[12px] uppercase tracking-[0.18em] text-cyan">(04) Contact</p>
+          <h2 data-split-rise class="font-display text-mega font-bold">Let’s make it move.</h2>
+          <a href="mailto:hello@example.com" class="mt-10 inline-flex items-center gap-3 rounded-full bg-ink px-6 py-4 font-mono text-[13px] uppercase tracking-[0.12em] text-void">
+            <i data-lucide="mail" class="size-4"></i> hello@example.com <i data-lucide="arrow-up-right" class="size-4"></i>
+          </a>
+        </div>
+        <footer class="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-mute">
+          <span>© <span id="year"></span> Hyperform</span>
+          <a class="inline-flex items-center gap-2 hover:text-ink" href="https://github.com/Maliot100X/3d-web-builder-toolkit"><i data-lucide="github" class="size-4"></i> Toolkit</a>
+        </footer>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

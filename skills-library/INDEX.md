@@ -55,3 +55,7 @@ Vendored agent skills (permissive licences; LICENSE kept in each folder). Source
 | `webq-performance` | Optimize web performance for faster loading and better user experience. Use when asked to speed up my site, optimize performance, reduce load time, fix slow loading, improve page speed, or performance |
 | `webq-seo` | Optimize for search engine visibility and ranking. Use when asked to improve SEO, optimize for search, fix meta tags, add structured data, sitemap optimization, or search engine optimization. |
 | `webq-web-quality-audit` | Run an evidence-led web quality audit covering performance, accessibility, SEO, best practices, and agentic browsing. Use when asked to audit my site, review web quality, run lighthouse audit, check p |
+
+## Deepgram (local copy, not committed)
+Copied 2026-11-25 from https://github.com/deepgram/skills (no licence file upstream, so it is kept out of git; re-fetch with `git clone --depth 1 https://github.com/deepgram/skills`).
+`deepgram/voice-agent` (Agent WebSocket contract, Settings, functions), `deepgram/browser-agent` (@deepgram/agents SDK, tokenFactory auth), `deepgram/text-to-speech`, `deepgram/speech-to-text`, `deepgram/cli` (dg CLI), `deepgram/setup-mcp` (docs MCP https://api.dx.deepgram.com/kapa/mcp), `deepgram/api`, `deepgram/recipes`, `deepgram/starters`, `deepgram/examples`, `deepgram/docs`, `deepgram/audio-intelligence`, `deepgram/text-intelligence`, `deepgram/self-hosted`.

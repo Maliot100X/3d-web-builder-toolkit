@@ -186,3 +186,6 @@ each phase (what was done, screenshot if visual, what's next). **Ask before anyt
   (or push to existing); Vercel: import repo or `vercel deploy --prod` (Vercel MCP/CLI), set env vars, check build logs,
   smoke-test the production URL with `npm run qa -- --url <prod-url>`.
 - **Exit**: repo URL + production URL reported; QA passes against production; README updated with links.
+
+## Lessons log
+- 2026-11-25 (cafe-rdv): never use the global reduced-motion `* { transition-duration: 0.01ms !important }` trick. Default `transition-property: all` then animates *inherited* properties (font-size on an `<em>` inside a fit-to-width wordmark), so measurements read stale values and the wordmark overflows. Use `transition: none !important` in the reduced branch. Also refit wordmarks on `document.fonts` `loadingdone`, because italic faces load lazily after the first measure.

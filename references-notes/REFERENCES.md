@@ -36,3 +36,17 @@ Licence column: what the repo declares. "none" = all rights reserved → study o
 ## GitHub topics (top repos by stars, saved as TSV)
 - `topic-animated-website.tsv` — highlights beyond the user's list: kirito666coder/spylt (Next+GSAP drink landing), meetdarji006/meet-ui (MIT animated components), SkyNotSilent/true-web-clone (MIT clone skill → vendored in skills-library).
 - `topic-webgl-shaders.tsv` — **UstymUkhman/vite-plugin-glsl (MIT, 428★)**: `import frag from './x.glsl'` with `#include` + minify; use for shader-heavy builds.
+
+## Added 2026-11-25 (café rebuild audit)
+Every repo the user listed is cloned in `references/` (15 + deepgram/skills). BD2-L2D-Viewer was missing and is now cloned (4.7 GB with game assets, kept off git).
+
+| Repo | Licence | Stack | What to learn (technique → where) |
+|---|---|---|---|
+| [Jelosus2/BD2-L2D-Viewer](https://github.com/Jelosus2/BD2-L2D-Viewer) | MIT | Vue 3 + Vite + **Spine player 4.1/4.2** | Viewer architecture: `src/components/SpineViewer.vue` (player lifecycle, camera reset, animation list), `stores/characterStore.ts`. **It plays Spine skeletons, not Live2D Cubism `.moc3`**, so for the Nekomi model use pixi-live2d-display. Reuse only the viewer UX (animation sidebar, background, camera) |
+| [guansss/pixi-live2d-display](https://github.com/guansss/pixi-live2d-display) | MIT | PixiJS 6/7 + Cubism Core 2.1/4 | `Live2DModel.from(model3.json)`, motions/expressions, `model.internalModel.coreModel.setParameterValueById('ParamMouthOpenY', v)` lip-sync, focus/hit-areas. Cubism **5** moc3 (Nekomi) needs a Cubism-5-capable core/fork (test in Phase 7) |
+| [kirito666coder/spylt](https://github.com/kirito666coder/spylt) | none (study only) | Next 16 + GSAP 3.14 + @gsap/react + Tailwind 4 | **Drink landing page**: `components/FlavorSlider.tsx` (pinned horizontal drink slider, scrub, title split parallax L14–74), `ClipPathTitle.tsx` (clip-path polygon title reveal L23–35), `app/(root)/Hero.tsx` (SplitText chars rise + hero card rotate/scale on scroll L12–58), `VideoPinCompo.tsx` (pinned video circle). Re-implement, don't copy |
+| [meetdarji006/meet-ui](https://github.com/meetdarji006/meet-ui) | MIT | Next + motion | Animated component library (text reveals, magnetic buttons); MIT means components can be ported |
+| [UstymUkhman/vite-plugin-glsl](https://github.com/UstymUkhman/vite-plugin-glsl) | MIT | Vite plugin | `import frag from './x.glsl'` with `#include` + minify, for the page-curl and cup shaders |
+| [hekall21/nothin-paris-luxury](https://github.com/hekall21/nothin-paris-luxury) | none | DESIGN.md only | Luxury lookbook design notes (chrome shaders). Reference text only |
+
+**Scrolltide (free parts, no paid MCP):** the public template pages and preview films (studied in `scrolltide/`), and the free rebuild prompts of Otis, SELENE, NAÏADE and Fluxora (readable without login). The Scrolltide MCP (`https://www.scrolltide.co/api/mcp`) needs a Yearly/Lifetime plan and OAuth, so it was not connected.

@@ -9,3 +9,5 @@ references/
 research/
 *.log
 .DS_Store
+skills-library/deepgram/
+__pycache__/

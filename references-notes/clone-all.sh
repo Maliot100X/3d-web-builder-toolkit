@@ -10,3 +10,8 @@ for r in ANUXR4G/Mage-UI Egonex-AI/Understand-Anything nishatrhythm/Responsive-A
 done
 # 3.8 GB of game assets — only if you really need it:
 # git clone --depth 1 https://github.com/Jelosus2/BD2-L2D-Viewer Jelosus2__BD2-L2D-Viewer
+
+# Added 2026-11-25 (cafe-rdv rebuild): top topic picks + Live2D runtime
+for r in kirito666coder/spylt meetdarji006/meet-ui UstymUkhman/vite-plugin-glsl hekall21/nothin-paris-luxury guansss/pixi-live2d-display; do
+  d=${r//\//__}; [ -d "$d" ] || git clone --depth 1 --filter=blob:limit=20m "https://github.com/$r" "$d"
+done

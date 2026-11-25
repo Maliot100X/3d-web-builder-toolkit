@@ -1,22 +1,26 @@
 # Zip sites — the user's "perfect 3D sites" (highest-priority references)
 
-| # | Zip (attachment hash) | Status | Folder | Analysis |
+| # | Zip | Status | Folder | Analysis |
 |---|---|---|---|---|
-| 1 | `58b2bb1aed749020ae9bc6d3c20a3d78a07d221c62b70d68a146250d18c18ece.zip` (2.4 MB) | ✅ unzipped, built, served, screenshotted | `otis-taffy-face-portfolio/` | [ANALYSIS.md](otis-taffy-face-portfolio/ANALYSIS.md) |
-| 2 | `97f959ee58caf869c6c6b83cddcf7dc89255ca11558def79285c3d9c590cfc2d.zip` (2.7 MB) | ❌ never reached the box | — | pending re-upload |
-| 3 | `99f442fdc4f8ef6c79862ceba6b444adfd80f42eeefd2517ed2bafb522266a55.zip` (17.3 MB) | ❌ never reached the box | — | pending re-upload |
-| 4 | `bd9246f13e4971738d030077b02e0f745fe6e5a50ba5e956a4b469ee92d48272.zip` (2.2 MB) | ❌ never reached the box | — | pending re-upload |
+| 1 | `otis.zip` / `58b2bb1a….zip` (2.5 MB, md5 `114b9f48…`, **byte-identical** re-send) | ✅ studied | `otis-taffy-face-portfolio/` | [ANALYSIS.md](otis-taffy-face-portfolio/ANALYSIS.md) |
+| 2 | `selene.zip` (2.8 MB) | ✅ unzipped, built, served, shot | `selene-earthrise-lunar-missions/` | [ANALYSIS.md](selene-earthrise-lunar-missions/ANALYSIS.md) |
+| 3 | `naiade.zip` (18.1 MB) | ✅ unzipped, built, served, shot | `naiade-deep-end-jewellery-film/` | [ANALYSIS.md](naiade-deep-end-jewellery-film/ANALYSIS.md) |
+| 4 | `visor.zip` (2.3 MB) | ✅ unzipped, built, served, shot | `visor-future-vision-vr-hero/` | [ANALYSIS.md](visor-future-vision-vr-hero/ANALYSIS.md) |
 
-Zips 2–4 were listed as attached but the files never materialized in the attachments folder (only zip 1 did,
-repeated checks throughout the setup run). They were sent from a phone that is offline, so they could not be pulled.
-**Re-attach them (ideally from the desktop) and re-run the zip-site study**: unzip into a descriptive folder,
-`npm i && npm run build`, `npx vite preview`, then
-`node ../tools/shoot.mjs http://localhost:PORT/ screenshots/<name> 0,0.25,0.5,0.75,1`, and write `<name>/ANALYSIS.md`
-using the same template as zip 1.
+Screenshots (zips 2–4): `screenshots/jpg/<site>-0N-XXpct.jpg` (1440×900) and `<site>-mobile-0N-XXpct.jpg` (390×844) at scroll 0/25/50/75/100 %.
+SELENE and NAÏADE share the same author code (`lib/math.ts`, `hooks/useFitText.ts`, `useReveals.ts`, `useReducedMotion.ts` byte-identical; `lib/scroll.ts` nearly so).
+None of zips 2–4 use WebGL: their "3D" is a scrubbed frame film (NAÏADE), photographic layer parallax (SELENE) and a masked dual-video occlusion (Visor). Raw WebGL2 lives in Otis only.
+
+## How to study a new zip
+Unzip into a descriptive folder, `npm i && npm run build`, `npx vite preview --host 127.0.0.1 --port PORT`, then run
+`node ../tools/shoot.mjs http://127.0.0.1:PORT/ screenshots/<name> 0,0.25,0.5,0.75,1` (and again with `390 844` for mobile; run heavy canvas sites one at a time, parallel runs time out in swiftshader),
+convert to JPG ≤1600 px in `screenshots/jpg/`, and write `<name>/ANALYSIS.md` with the same template.
 
 `node_modules/` and `dist/` inside each zip site are git-ignored; the source is committed (small).
 
-## Second upload attempt (2026-11-25, 03:2x Europe/Skopje)
+## History: upload attempts (resolved 2026-11-25 03:43 Europe/Skopje, zips placed in /workspace/uploads/zips/)
+
+### Second upload attempt (2026-11-25, 03:2x Europe/Skopje)
 The user re-sent all four zips. They were listed as attachments, but again **none reached the box**: the attachments folder still holds only zip 1 (`58b2bb1a…`), the Live2D model zip and the Layer2D kit, and a filesystem-wide search found nothing. Both of the user's registered machines (the S24 Ultra phone and DESKTOP-GTJ9TKL) were offline, so the files couldn't be pulled with CopyToBox either.
 
 | Re-sent hash | Size | Likely | Status |

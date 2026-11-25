@@ -1,0 +1,8 @@
+{
+  "url": "http://127.0.0.1:4303/",
+  "scrollHeight": 192,
+  "shots": 5,
+  "errors": [
+    "requestfailed: http://127.0.0.1:4303/hero.mp4 net::ERR_ABORTED"
+  ]
+}

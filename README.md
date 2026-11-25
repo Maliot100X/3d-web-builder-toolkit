@@ -6,6 +6,8 @@ phase by phase, ending on GitHub + Vercel. Free tools only (no paid MCPs used). 
 ![starter: film hero](docs/screenshots/starter-desktop-hero.jpg)
 ![starter: pieces](docs/screenshots/starter-desktop-pieces.jpg)
 
+**Phase 0 inventory (42 repos built/run/screenshotted, 117 skills): see [INVENTORY.md](INVENTORY.md) and [inventory-sheets/](inventory-sheets/).**
+
 ## Inventory
 
 | Path | What it is |

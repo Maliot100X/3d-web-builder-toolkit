@@ -1,0 +1,1 @@
+install=ok build=skip serve=cmd:npx vite --host 127.0.0.1 --port $PORT --strictPort

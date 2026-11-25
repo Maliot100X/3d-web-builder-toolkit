@@ -1,0 +1,2 @@
+install=skip build=ok serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=ok build=FAIL serve=cmd:npx next start -H 127.0.0.1 -p $PORT

@@ -15,3 +15,8 @@ done
 for r in kirito666coder/spylt meetdarji006/meet-ui UstymUkhman/vite-plugin-glsl hekall21/nothin-paris-luxury guansss/pixi-live2d-display; do
   d=${r//\//__}; [ -d "$d" ] || git clone --depth 1 --filter=blob:limit=20m "https://github.com/$r" "$d"
 done
+
+# Added 2026-11-25 Phase 0 full setup (user avatar/voice repos + topic top picks). Then build/run: tools/phase0/build-one.sh <name>; tools/phase0/run-one.sh <name> <port> [path]
+for r in Balajitechlabs/balajitechlabs.com Bismay-exe/Cyberfiction CoderSwarup/ai_landing_page JuiceBoxxGames/utsuwa Live2D/CubismWebSamples SkyNotSilent/true-web-clone anushkachauhxn/custom-globe-3js anushkachauhxn/particle-galaxy-3js bedimcode/responsive-pirate-website codegenweb/Save-Animals datascale-ai/opentalking girishlade111/cloth-simulation hekall21/black-hole-singularity-3d hekall21/quantum-particle-wave-3d jofizcd/Soul-of-Waifu kirito666coder/mojito-cocktail moeru-ai/airi mursalhayat1/Everswap owais-khan-zai/Software-Company-Website-Project pixiv/three-vrm yuri-os/YuriOS zyna-b/React-GSAP-Animated-Studio-website ; do
+  d=${r//\//__}; [ -d "$d" ] || git clone --depth 1 --recurse-submodules "https://github.com/$r" "$d"
+done

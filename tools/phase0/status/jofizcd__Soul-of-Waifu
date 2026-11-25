@@ -1,0 +1,1 @@
+install=skip build=skip serve=none:Windows PyQt desktop app (start.bat/main.py), no web UI

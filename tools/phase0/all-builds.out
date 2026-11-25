@@ -1,0 +1,42 @@
+install=skip build=skip serve=static:.
+install=FAIL build=skip serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=skip build=skip serve=static:.
+install=ok build=ok serve=static:dist
+install=FAIL build=skip serve=static:dist
+install=skip build=skip serve=none:Windows SteamVR/AirPods Python driver, not a website
+install=FAIL build=skip serve=cmd:npx vite preview --host 127.0.0.1 --port $PORT --strictPort
+install=ok build=ok serve=static:dist
+install=ok build=ok serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=skip build=skip serve=static:docs
+install=ok build=skip serve=cmd:npx vite --host 127.0.0.1 --port $PORT --strictPort
+install=skip build=skip serve=static:.
+install=ok build=ok serve=static:dist
+install=ok build=ok serve=static:dist
+install=skip build=skip serve=static:.
+install=skip build=skip serve=static:.
+install=ok build=ok serve=static:dist
+install=skip build=skip serve=none:agent skills (markdown), installed into skills-library
+install=skip build=skip serve=static:.
+install=ok build=ok serve=static:dist
+install=ok build=FAIL serve=cmd:npx vite --host 127.0.0.1 --port $PORT --strictPort
+install=skip build=skip serve=static:.
+install=skip build=skip serve=none:repo holds DESIGN.md only; live site https://noth.in shot instead
+install=skip build=skip serve=static:.
+install=skip build=skip serve=none:Windows PyQt desktop app (start.bat/main.py), no web UI
+install=ok build=ok serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=ok build=FAIL serve=static:.
+install=skip build=skip serve=static:.
+install=ok build=ok serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=skip build=skip serve=static:.
+install=ok build=ok serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=skip build=skip serve=static:.
+install=ok build=ok serve=static:dist
+install=ok build=ok serve=static:dist
+install=FAIL build=skip serve=static:packages/three-vrm
+install=skip build=skip serve=static:.
+install=ok build=FAIL serve=cmd:npx next start -H 127.0.0.1 -p $PORT
+install=ok build=ok serve=static:dist
+install=ok build=ok serve=static:dist
+install=FAIL build=skip serve=static:apps/stage-web/dist
+install=ok build=ok serve=static:dist
+install=ok build=ok serve=cmd:npx next start -H 127.0.0.1 -p $PORT

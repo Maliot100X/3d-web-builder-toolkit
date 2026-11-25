@@ -11,3 +11,32 @@ research/
 .DS_Store
 skills-library/deepgram/
 __pycache__/
+# Phase 0: full-res PNG screenshots stay on the box (JPG copies are committed)
+references-screenshots/phase0/*.png
+# Phase 0: skills whose upstream declares no licence are installed locally only; SOURCE.md is pushed
+skills-library/vercel-web-design-guidelines/*
+!skills-library/vercel-web-design-guidelines/SOURCE.md
+skills-library/vercel-react-best-practices/*
+!skills-library/vercel-react-best-practices/SOURCE.md
+skills-library/vercel-react-view-transitions/*
+!skills-library/vercel-react-view-transitions/SOURCE.md
+skills-library/vercel-composition-patterns/*
+!skills-library/vercel-composition-patterns/SOURCE.md
+skills-library/vercel-deploy-to-vercel/*
+!skills-library/vercel-deploy-to-vercel/SOURCE.md
+skills-library/awwwards-animations/*
+!skills-library/awwwards-animations/SOURCE.md
+skills-library/live2d-cubism-web-quickstart/*
+!skills-library/live2d-cubism-web-quickstart/SOURCE.md
+skills-library/live2d-cubism-web-rendering/*
+!skills-library/live2d-cubism-web-rendering/SOURCE.md
+skills-library/live2d-cubism-web-motion/*
+!skills-library/live2d-cubism-web-motion/SOURCE.md
+skills-library/designing-beautiful-websites/*
+!skills-library/designing-beautiful-websites/SOURCE.md
+skills-library/nextjs-framer-motion-animations/*
+!skills-library/nextjs-framer-motion-animations/SOURCE.md
+skills-library/tailwind-4-docs/*
+!skills-library/tailwind-4-docs/SOURCE.md
+# Live2D Cubism Core is proprietary – never commit
+**/live2dcubismcore*.js

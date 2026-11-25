@@ -32,9 +32,10 @@
         <a class="nav-link label" href="#pieces">Pieces</a>
         <a class="nav-link label" href="#process">Process</a>
         <a class="nav-link label" href="#atelier">Atelier</a>
+        <a class="nav-link label" href="#hold">Hold it</a>
         <a class="nav-link label" href="#visit">Visit</a>
       </nav>
-      <a href="#pieces" class="label">Bag (<span data-bag-count>0</span>)</a>
+      <a href="#pieces" class="label flex items-center gap-2"><i data-lucide="shopping-bag"></i>Bag (<span data-bag-count>0</span>)</a>
     </header>
 
     <main id="main">
@@ -66,7 +67,7 @@
             <span class="relative h-40 w-px bg-bone/25"><span data-rail-fill class="absolute inset-x-0 top-0 h-full origin-top scale-y-0 bg-bone"></span></span>
             <span class="label text-bone/60">03</span>
           </div>
-          <p class="label absolute bottom-[clamp(28px,6vh,64px)] right-[clamp(18px,3vw,44px)] hidden text-bone/70 md:block" data-scroll-cue>Scroll — the camera moves</p>
+          <p class="label absolute bottom-[clamp(28px,6vh,64px)] right-[clamp(18px,3vw,44px)] hidden text-bone/70 md:block" data-scroll-cue><span class="flex items-center gap-2"><i data-lucide="arrow-down"></i>Scroll — the camera moves</span></p>
         </div>
       </section>
 
@@ -119,6 +120,7 @@
       <section id="pieces" class="bg-paper px-[clamp(18px,3vw,44px)] py-[clamp(96px,16vh,200px)]">
         <div class="mb-16 flex flex-wrap items-end justify-between gap-6">
           <h2 class="display text-h2"><span class="line-mask"><span>Firing <em>No. 23</em></span></span></h2>
+          <p class="label flex items-center gap-2 text-mute md:hidden"><i data-lucide="arrow-up-right"></i>Tap a piece to open it</p>
           <p class="label max-w-[34ch] text-mute">Three pieces from the autumn firing. Each is one of one; the photograph is the piece you receive.</p>
         </div>
         <div class="grid gap-x-6 gap-y-16 md:grid-cols-3">
@@ -128,56 +130,86 @@
             </a>
             <div class="mt-5 flex items-start justify-between gap-4">
               <div><h3 class="display text-h3">Fog <em>Vase</em></h3><p class="label mt-2 text-mute">Celadon · 31 cm · Stoneware</p></div>
-              <div class="text-right"><p class="label">€ 420</p><button type="button" class="btn mt-3 bg-ink text-bone" data-add>Add to bag</button></div>
+              <div class="text-right"><p class="label">€ 420</p><button type="button" class="btn mt-3 bg-ink text-bone" data-add><i data-lucide="plus"></i>Add to bag</button></div>
             </div>
           </article>
           <article class="group md:mt-24" data-reveal>
             <a href="/piece.html" class="block" data-transition><div class="frame aspect-[3/4]" data-distort><img src="/media/piece-02.webp" alt="Wide speckled stoneware bowl with a raw terracotta foot." loading="lazy" /></div></a>
             <div class="mt-5 flex items-start justify-between gap-4">
               <div><h3 class="display text-h3">Shore <em>Bowl</em></h3><p class="label mt-2 text-mute">Oatmeal · Ø 24 cm · Stoneware</p></div>
-              <div class="text-right"><p class="label">€ 260</p><button type="button" class="btn mt-3 bg-ink text-bone" data-add>Add to bag</button></div>
+              <div class="text-right"><p class="label">€ 260</p><button type="button" class="btn mt-3 bg-ink text-bone" data-add><i data-lucide="plus"></i>Add to bag</button></div>
             </div>
           </article>
           <article class="group md:mt-48" data-reveal>
             <a href="/piece.html" class="block" data-transition><div class="frame aspect-[3/4]" data-distort><img src="/media/piece-03.webp" alt="Round moon jar in iron-black tenmoku breaking to rust." loading="lazy" /></div></a>
             <div class="mt-5 flex items-start justify-between gap-4">
               <div><h3 class="display text-h3">Ember <em>Moon Jar</em></h3><p class="label mt-2 text-mute">Tenmoku · 22 cm · Wood-fired</p></div>
-              <div class="text-right"><p class="label">€ 680</p><button type="button" class="btn mt-3 bg-ink text-bone" data-add>Add to bag</button></div>
+              <div class="text-right"><p class="label">€ 680</p><button type="button" class="btn mt-3 bg-ink text-bone" data-add><i data-lucide="plus"></i>Add to bag</button></div>
             </div>
           </article>
         </div>
       </section>
 
-      <!-- 05 · ATELIER: full-bleed image opens from a window (clip-path) + parallax ----- -->
+      <!-- 05 · HOLD IT: the one three.js moment — the product itself, turning in studio light --- -->
+      <section id="hold" class="relative bg-bone md:h-[100svh]" data-hold aria-labelledby="hold-title">
+        <div class="grid h-full md:grid-cols-12">
+          <div class="flex flex-col justify-between gap-10 px-[clamp(18px,3vw,44px)] pb-10 pt-[clamp(96px,14vh,160px)] md:col-span-5 md:pb-12">
+            <div>
+              <p class="label mb-6 text-mute">(04) — Hold it</p>
+              <h2 id="hold-title" class="display text-h2" data-chars>Hold <em>it.</em></h2>
+              <p class="mt-8 max-w-[38ch] text-lede text-ink/75">The Fog Vase, in real time. Drag to turn it and see the glaze catch the light, then choose which glaze it's fired in.</p>
+            </div>
+            <div>
+              <p class="label mb-4 text-mute">Glaze · <span class="text-ink" data-glaze-name>Celadon</span></p>
+              <div class="flex flex-wrap gap-2" role="group" aria-label="Choose glaze">
+                <button type="button" class="swatch label" data-glaze="celadon" data-label="Celadon" aria-pressed="true"><span class="dot" style="background:#8fae9b"></span>Celadon</button>
+                <button type="button" class="swatch label" data-glaze="oatmeal" data-label="Oatmeal" aria-pressed="false"><span class="dot" style="background:#d9cdb8"></span>Oatmeal</button>
+                <button type="button" class="swatch label" data-glaze="tenmoku" data-label="Tenmoku" aria-pressed="false"><span class="dot" style="background:#2a1d16"></span>Tenmoku</button>
+              </div>
+              <dl class="mt-10 grid grid-cols-2 gap-y-3 overflow-clip border-t border-ink/15 pt-6" data-specs>
+                <dt class="label text-mute" data-spec>Height</dt><dd class="label" data-spec>31 cm</dd>
+                <dt class="label text-mute" data-spec>Wall</dt><dd class="label" data-spec>4 mm, thrown</dd>
+                <dt class="label text-mute" data-spec>Firing</dt><dd class="label" data-spec>Wood · cone 10</dd>
+              </dl>
+            </div>
+          </div>
+          <div class="vessel-stage h-[78svh] md:col-span-7 md:h-full" data-vessel>
+            <img src="/media/piece-01.webp" alt="The Fog Vase, a tall celadon stoneware vase." loading="lazy" />
+            <p class="label pointer-events-none absolute bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap text-mute"><i data-lucide="rotate-3d"></i> Drag to turn · real-time</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 · ATELIER: full-bleed image opens from a window (clip-path) + parallax ----- -->
       <section id="atelier" class="bg-paper pb-[clamp(96px,16vh,200px)]">
         <div class="frame h-[110svh]" data-window>
           <img class="parallax" src="/media/atelier.webp" alt="The atelier: shelves of drying pots beside a foggy lake window." loading="lazy" data-parallax />
           <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent px-[clamp(18px,3vw,44px)] pb-10 pt-40 text-bone">
-            <p class="label mb-4 text-bone/70">(04) — The atelier</p>
+            <p class="label mb-4 text-bone/70">(05) — The atelier</p>
             <p class="display max-w-[18ch] text-h2">An old stone house, <em>one window on the water.</em></p>
           </div>
         </div>
       </section>
 
-      <!-- 06 · VISIT + giant wordmark ------------------------------------------------- -->
+      <!-- 07 · VISIT + giant wordmark ------------------------------------------------- -->
       <section id="visit" class="bg-ink px-[clamp(18px,3vw,44px)] pt-[clamp(96px,16vh,200px)] text-bone">
         <div class="grid gap-12 md:grid-cols-12">
           <div class="md:col-span-6">
-            <p class="label mb-6 text-stone">(05) — Visit</p>
+            <p class="label mb-6 text-stone">(06) — Visit</p>
             <h2 class="display text-h2"><span class="line-mask"><span>Come for</span></span><span class="line-mask"><span><em>the opening of the kiln.</em></span></span></h2>
           </div>
           <form class="md:col-span-5 md:col-start-8 md:self-end" data-form>
             <label for="email" class="label mb-3 block text-stone">Four openings a year · one letter each</label>
             <div class="flex gap-2 border-b border-bone/30 pb-3">
               <input id="email" type="email" required placeholder="you@email.com" class="min-w-0 flex-1 bg-transparent text-lede outline-none placeholder:text-bone/35" />
-              <button type="submit" class="btn bg-bone text-ink">Reserve</button>
+              <button type="submit" class="btn bg-bone text-ink">Reserve <i data-lucide="arrow-right"></i></button>
             </div>
             <p class="label mt-4 hidden text-celadon" data-form-done role="status">You’re on the list. We’ll write before the next firing.</p>
           </form>
         </div>
         <p class="display mt-[clamp(80px,14vh,180px)] mb-4 select-none overflow-clip whitespace-nowrap pb-[0.06em] text-center leading-[0.95]" data-fit aria-hidden="true">Halcyon</p>
         <footer class="flex flex-wrap items-center justify-between gap-4 border-t border-bone/15 py-6 text-stone">
-          <span class="label">© <span data-year></span> Halcyon Ceramics · Ohrid</span>
+          <span class="label flex items-center gap-2"><i data-lucide="map-pin"></i>© <span data-year></span> Halcyon Ceramics · Ohrid</span>
           <span class="label">Starter · 3d-web-builder-toolkit</span>
         </footer>
       </section>

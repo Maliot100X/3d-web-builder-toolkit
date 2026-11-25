@@ -15,8 +15,8 @@
     <div class="curtain" aria-hidden="true"></div>
     <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-[clamp(18px,3vw,44px)] py-5 text-bone mix-blend-difference">
       <a href="/" class="display text-2xl leading-none" data-transition aria-label="Halcyon, home">Halcyon</a>
-      <a href="/#pieces" class="nav-link label" data-transition>← All pieces</a>
-      <span class="label">Bag (<span data-bag-count>0</span>)</span>
+      <a href="/#pieces" class="nav-link label" data-transition><span class="flex items-center gap-2"><i data-lucide="arrow-left"></i>All pieces</span></a>
+      <span class="label flex items-center gap-2"><i data-lucide="shopping-bag"></i>Bag (<span data-bag-count>0</span>)</span>
     </header>
 
     <main id="main" class="grid min-h-[100svh] md:grid-cols-12">
@@ -44,7 +44,7 @@
         </dl>
         <div class="flex items-center justify-between gap-6" data-rise>
           <p class="display text-h3">€ 420</p>
-          <button type="button" class="btn bg-ink text-bone" data-add>Add to bag</button>
+          <button type="button" class="btn bg-ink text-bone" data-add><i data-lucide="plus"></i>Add to bag</button>
         </div>
       </div>
     </main>

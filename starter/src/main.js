@@ -8,10 +8,13 @@ import { initTransitions } from './motion/transitions.js';
 import { initHoverDistort } from './gl/hover-distort.js';
 import { createPreloader } from './ui/preloader.js';
 import { initCommerce } from './ui/commerce.js';
+import { initIcons } from './ui/icons.js';
+import { initHold } from './motion/hold.js';
 
 const reduced = reducedMotion();
 document.documentElement.classList.toggle('reduced', reduced);
 
+initIcons();
 const preloader = createPreloader({ reduced });
 startScroll(reduced);
 initFilm({ reduced, onProgress: preloader.progress });
@@ -19,6 +22,7 @@ fitText(document.querySelector('[data-fit]'));
 initChoreography();
 initTransitions({ reduced });
 initCommerce({ reduced });
+initHold({ reduced });
 if (!reduced && window.matchMedia('(pointer: fine)').matches) initHoverDistort();
 
 // In-page anchors go through Lenis so the smooth clock never fights native jumps

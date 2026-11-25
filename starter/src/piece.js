@@ -4,7 +4,9 @@ import { reducedMotion } from './lib/env.js';
 import { startScroll } from './motion/scroll.js';
 import { initTransitions } from './motion/transitions.js';
 import { initCommerce } from './ui/commerce.js';
+import { initIcons } from './ui/icons.js';
 
+initIcons();
 const reduced = reducedMotion();
 document.documentElement.classList.toggle('reduced', reduced);
 startScroll(reduced);

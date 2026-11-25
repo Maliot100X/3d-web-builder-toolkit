@@ -1,7 +1,7 @@
 # Halcyon: editorial scroll starter
 
 A working reference for the [DESIGN-BAR](../DESIGN-BAR.md): a fictional ceramics atelier at Lake Ohrid, built the way
-Scrolltide's sites are built. There are no cubes, blobs or particles. Every moving thing is a photograph, a camera or type.
+Scrolltide's sites are built. There are no cubes, blobs or particles. Every moving thing is a photograph, a camera, type, or the product itself.
 
 ```bash
 npm i
@@ -16,9 +16,11 @@ npm run lint && npm run build && npm run qa   # QA = Playwright desktop / mobile
 | 02 Manifesto | scrubbed word rise (accessible split) | `src/motion/split.js`, `choreography.js` |
 | 03 Process | sticky media column; chapters wipe in with clip-path and scale settle; counter. Mobile: inline images | `choreography.js` |
 | 04 Pieces | staggered editorial cards; liquid ripple hover in **one shared WebGL1 canvas** (fine pointer only); bag counter | `src/gl/hover-distort.js`, `src/ui/commerce.js` |
-| 05 Atelier | window → full-bleed clip-path reveal plus inner parallax | `choreography.js` |
-| 06 Visit | waitlist form; fitted "Halcyon" wordmark with letter rise | `fitText()` |
-| Detail page | `piece.html` shares `view-transition-name: piece-01` with the card (cross-document View Transitions); ink-curtain fallback | `src/motion/transitions.js`, `src/piece.js` |
+| 05 Hold it | **the one three.js moment**: real-time lathe-turned vase, MeshPhysicalMaterial glaze (clearcoat, crackle roughness/bump), raw clay foot, RoomEnvironment PMREM studio light + soft shadow rendered once (surface of revolution), drag-to-turn with inertia, glaze swatches, GSAP pin + scroll turn on desktop; code-split, lazy-loaded one viewport early, adaptive DPR | `src/gl/vessel.js`, `src/motion/hold.js` |
+| Icons | Lucide, tree-shaken `createIcons` | `src/ui/icons.js` |
+| 06 Atelier | window → full-bleed clip-path reveal plus inner parallax | `choreography.js` |
+| 07 Visit | waitlist form; fitted "Halcyon" wordmark with letter rise | `fitText()` |
+| Detail page | `piece.html` shares `view-transition-name: piece-01` with the card (cross-document View Transitions on fine pointers); ink-curtain on touch/other browsers | `src/motion/transitions.js`, `src/piece.js` |
 
 **One clock**: the GSAP ticker drives Lenis and the film renderer (`src/motion/scroll.js`). **Reduced motion**: no Lenis, a
 still frame, no reveals, beats hidden, and the film collapses to one screen. **Fonts**: Fraunces (opsz/SOFT/WONK italics),

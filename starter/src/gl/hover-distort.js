@@ -16,13 +16,16 @@ void main(){
   vec2 uv = vec2(v.x, 1.0 - v.y);
   vec2 d = uv - m;
   float r = length(d * vec2(1.0, 1.33));
-  float wave = sin(r * 38.0 - time * 3.2) * exp(-r * 6.0) * 0.012 * k;
+  float wave = sin(r * 30.0 - time * 4.0) * exp(-r * 3.2) * 0.032 * k;
   vec2 o = normalize(d + 1e-5) * wave;
-  vec2 cuv = (uv + o) * cover.xy + cover.zw;
-  float split = 0.0025 * k * exp(-r * 4.0);
-  float cr = texture2D(t, cuv + vec2(split, 0.0)).r;
-  vec2 gb = texture2D(t, cuv).gb;
-  gl_FragColor = vec4(cr, gb, 1.0);
+  vec2 zuv = mix(uv, m, 0.045 * k);  // slight push-in toward the cursor
+  vec2 cuv = (zuv + o) * cover.xy + cover.zw;
+  float split = 0.009 * k * exp(-r * 2.5);
+  float cr = texture2D(t, cuv + o * 0.6 + vec2(split, 0.0)).r;
+  float cg = texture2D(t, cuv).g;
+  float cb = texture2D(t, cuv - vec2(split, 0.0)).b;
+  float glint = max(wave, 0.0) * 6.0;  // light catching the ripple crests
+  gl_FragColor = vec4(vec3(cr, cg, cb) + glint, 1.0);
 }`;
 
 export function initHoverDistort() {

@@ -6,7 +6,7 @@ import { gsap } from 'gsap';
  * we stay out of the way. Others get an ink curtain that wipes up, navigates, and
  * lifts on the next page.
  */
-const nativeVT = () => 'onpagereveal' in window && CSS.supports?.('view-transition-name: a');
+const nativeVT = () => 'onpagereveal' in window && CSS.supports?.('view-transition-name: a') && window.matchMedia('(pointer: fine)').matches;
 
 export function initTransitions({ reduced }) {
   const curtain = document.querySelector('.curtain');
@@ -15,7 +15,8 @@ export function initTransitions({ reduced }) {
     sessionStorage.removeItem('halcyon:curtain');
     gsap.fromTo(curtain, { clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.9, ease: 'expo.inOut', delay: 0.05 });
   }
-  if (reduced || nativeVT()) return;
+  // touch / coarse pointers: plain navigation (fast, robust); fine pointers: native morph or curtain
+  if (reduced || nativeVT() || !window.matchMedia('(pointer: fine)').matches) return;
   document.querySelectorAll('a[data-transition]').forEach((a) => {
     a.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;

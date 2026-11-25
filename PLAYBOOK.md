@@ -3,6 +3,10 @@
 Read this before every web project. It is the contract: **no phase is skipped, no phase starts before the previous
 phase's exit checklist is green, and the whole site is never "bulk generated" in one go.**
 
+**Quality bar: [`DESIGN-BAR.md`](DESIGN-BAR.md).** Editorial, art-directed, cinematic scroll (Scrolltide / zip sites).
+No spinning cubes, generic blobs, stock particles or template gradients. "3D" means *depth and camera*: usually a
+pre-rendered frame film or layered photography. Real-time three.js is used only when the product needs it.
+
 ---
 
 ## 0. Canonical stack
@@ -10,23 +14,44 @@ phase's exit checklist is green, and the whole site is never "bulk generated" in
 | Concern | Default (CDN / single-page) | Default (Vite build — preferred) | Bigger app option |
 |---|---|---|---|
 | Build | — | **Vite 6** (`npm create vite@latest`, vanilla) | Vite + React 19 (or Next.js when SSR/SEO-heavy) |
-| 3D | `three@0.160.0` `https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js` (+ importmap for `three/addons/`) | `three@0.160.0` (npm, code-split via dynamic `import()`) | **React Three Fiber + drei** (`@react-three/fiber`, `@react-three/drei`), `@react-three/postprocessing` |
+| Hero medium | **Frame-sequence film on `<canvas>`** (WebP frames from a rendered/AI-generated camera move) or layered photo parallax. No library | same | — |
+| 3D (only when the subject needs it) | `three@0.160.0` `https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js` (+ importmap for `three/addons/`) | `three@0.160.0` (npm, code-split via dynamic `import()`) | **React Three Fiber + drei** (`@react-three/fiber`, `@react-three/drei`), `@react-three/postprocessing` |
 | Animation | `gsap@3.12.5` + `ScrollTrigger` (`https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js`, `.../ScrollTrigger.min.js`) | `gsap@3.12.5` npm | `@gsap/react` `useGSAP` |
 | Smooth scroll | `lenis@1.1.18` `https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js` | `lenis@1.1.18` + `lenis/dist/lenis.css` | same; `lenis/react` |
 | CSS | `https://cdn.tailwindcss.com` (prototype only) | **Tailwind v4** via `@tailwindcss/vite`, tokens in `@theme` | + shadcn/ui registries (Aceternity, Magic UI) |
 | Icons | `https://unpkg.com/lucide@latest` | `lucide` (named imports + `createIcons`) | `lucide-react` |
-| Fonts | Google Fonts: **Chakra Petch** 500/600/700 (display), **Sora** 300–600 (body), **IBM Plex Mono** 400/500 (labels) | same, `preconnect` + `display=swap` | Fontshare (Satoshi) as alt |
+| Fonts | Editorial trio: a **display serif with real italics** (Fraunces / Bodoni Moda / Instrument Serif), a quiet **sans** (Sora / Albert Sans / Inter), a **mono** for labels (IBM Plex Mono / Martian Mono / JetBrains Mono) | same, `preconnect` + `display=swap` | Fontshare (Satoshi, Clash) as alt; a heavy grotesk (Anton-like) for fashion |
 | Shaders | inline template strings | `?raw` imports of `.vert/.frag/.glsl` | `vite-plugin-glsl` for `#include` |
 | Deploy | — | **Vercel** (`vercel.json`, framework `vite`, output `dist`) | Vercel |
 | QA | — | Playwright (`npm run qa`), ESLint 9 flat config | + Chrome DevTools MCP traces |
 
-Pin exact versions of three/gsap/lenis (APIs drift). The working reference implementation is [`starter/`](starter/).
+Pin exact versions of three/gsap/lenis (APIs drift). The working reference implementation is [`starter/`](starter/)
+("Halcyon": frame film, pinned chapters, view transitions, one purposeful WebGL hover; no three.js).
 
 ---
 
-## 1. Techniques catalog (zip sites first, then repos)
+## 1. Techniques catalog (Scrolltide + zip sites first, then repos)
 
-### From the user's zip sites (highest priority)
+### From Scrolltide (the source of the zip sites; see `scrolltide/NOTES.md`)
+| Technique | How | Seen in → starter |
+|---|---|---|
+| Scroll-scrubbed frame film | WebP frame sequence drawn to canvas; sticky 100svh stage in a 4–6×vh section; never `<video>` seeking | NAÏADE, SÈVE, Aerie, MIRÉ → `film.js` |
+| Coarse-to-fine frame loading | frame 0, then stride 16/8/4/2/1, 6 workers, nearest-loaded fallback | NAÏADE prompt → `lib/frames.js` |
+| Time remap with holds | piecewise eased `[u,t]` beats; copy lands during holds | NAÏADE, SELENE → `film.js BEATS` |
+| Focal-point crop for portrait | subject x over time keeps it framed at 390px | NAÏADE → `film.js focalX` |
+| Product cards arrive as the camera settles | card stack slides in at a hold; bag counter | NAÏADE, Solano → pieces + `commerce.js` |
+| Giant fitted wordmark | measure at 100px → scale to width; type interacts with subject (model between letters) | MIRÉ, NAÏADE, SELENE, Otis → `fitText()` |
+| Serif + italic emphasis + mono labels | "Three pieces, *One* night swim"; `LOOK 01 · A FULL TURN` | all → `main.css .display/.label` |
+| Layered photographic parallax | 4–6 cut-out layers at different depths | SELENE (6 layers), Aerie |
+| Pinned chapter storytelling | sticky media + clip-path wipes per chapter, chapter counter/rail | MOLT, Sable, SÈVE → process section |
+| Window → full-bleed reveal | clip-path inset with radius → 0, inner parallax | many → atelier section |
+| Integral 3D, art-directed | lit product model or shop interior, often baked to frames | SÈVE flask, Solano shop, Sable shelf, MOLT layers |
+| Horizontal reel / builder | pinned horizontal mission reel; 12-pack configurator | SELENE, Sprig |
+| Preloader counting real work | wordmark + % of frames | NAÏADE, SELENE → `ui/preloader.js` |
+| Page transitions | shared-element morph between list and detail | → `@view-transition` + curtain (`transitions.js`) |
+| Purposeful WebGL accent | shader only on the thing being sold (hover ripple on product photo) | → `gl/hover-distort.js` |
+
+### From the user's zip sites (zip 1 = Scrolltide's free **Otis** hero)
 | Technique | How | Source |
 |---|---|---|
 | Grab-and-stretch mesh warp | 128² UV grid; vertex shader offsets each vertex by `exp(-d²/2σ²)` of distance to up to 4 grab anchors; σ grows with pull length | zip 1 `otis…/src/face/engine.ts` (faceVert) |
@@ -37,19 +62,20 @@ Pin exact versions of three/gsap/lenis (APIs drift). The working reference imple
 | Masked procedural tint | gaussian blobs × skin mask (`r−b` threshold) → blush/flush | zip 1 faceFrag |
 | Break-out-of-frame | clip below disc centre, overflow above (`max(step(), inDisc)`) + analytic AA `1/(size·dpr)` | zip 1 faceFrag |
 | Canvas over DOM, separate hit layer | canvas `pointer-events:none`, labelled hit element for a11y | zip 1 FaceCanvas.tsx |
-| Fit-to-width headline | measure at 100px → scale to parent width; refit on `fonts.ready` + ResizeObserver; publish `--mega` | zip 1 hooks.ts (also in starter poster.js) |
+| Fit-to-width headline | measure at 100px → scale to parent width; refit on `fonts.ready` + ResizeObserver; publish `--mega` | zip 1 hooks.ts → starter `fitText()` |
 | Live state UI | `aria-live` mood meter, `color-mix(in oklab, …)` bar | zip 1 App.tsx |
 | Theme tokens | `@theme inline` mapped to CSS vars, `data-theme`, theme-color meta | zip 1 index.css/hooks.ts |
 | *(zips 2–4: pending re-upload — add rows here after study)* | | |
 
+
 ### From the reference repos
 | Technique | How | Source |
 |---|---|---|
-| Ripple-refracted headline | 2 ping-pong RTs (Half/FloatType), wave eq. with 4 neighbours, gradient in BA; composite samples a CanvasTexture at `uv + grad·k` | gentlerain `script.js` → **starter `ripple-*.frag`** |
-| Lenis ⇄ ScrollTrigger | `lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0)` | gentlerain, norrav → starter `smooth-scroll.js` |
+| Ripple-refracted headline | 2 ping-pong RTs (Half/FloatType), wave eq. with 4 neighbours, gradient in BA; composite samples a CanvasTexture at `uv + grad·k` | gentlerain `script.js` (use on a *brand* headline only) |
+| Lenis ⇄ ScrollTrigger | `lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0)` | gentlerain, norrav → starter `motion/scroll.js` |
 | Locomotive + scrollerProxy | `ScrollTrigger.scrollerProxy('#main', {...}); pinType` | Lagunitas (legacy; prefer Lenis) |
-| Pinned horizontal gallery | `x: -(scrollWidth - innerWidth)`, `pin:true, scrub:1, invalidateOnRefresh` | Lagunitas, 0xAllan `Showcase.jsx` → starter |
-| Scrubbed word-opacity manifesto | split words, `opacity .12→1`, stagger, scrub | gentlerain-style → starter |
+| Pinned horizontal gallery | `x: -(scrollWidth - innerWidth)`, `pin:true, scrub:1, invalidateOnRefresh` | Lagunitas, 0xAllan `Showcase.jsx` |
+| Scrubbed word-opacity manifesto | split words, `opacity .12→1`, stagger, scrub | gentlerain-style → starter manifesto |
 | Product model viewer | `useGLTF` (gltfjsx `-transformed.glb`), `PresentationControls`, `Environment`+`Lightformer`, `useVideoTexture` screens | 0xAllan `ProductViewer.jsx`, `StudioLights.jsx` |
 | Baked 3D room hero | low-poly GLB + baked textures, camera moves per section, opt-in audio | Yash portfolio-3d |
 | Navier-Stokes fluid bg | dye/velocity/pressure/curl passes, config JSON | tkabalin WebGL-Fluid-Background |
@@ -57,7 +83,6 @@ Pin exact versions of three/gsap/lenis (APIs drift). The working reference imple
 | Pure-CSS fallback motion | keyframe typing/spin/slide | nishatrhythm style.css |
 | Registry component libraries | shadcn-format registry, cobe globe, particles | Mage-UI |
 | Skeletal 2D characters | Spine player runtime, export frames to video | BD2-L2D-Viewer |
-| Noise-displaced iridescent blob | simplex noise along normal + fresnel + IQ cosine palette | **starter `blob.*`** (Ashima noise MIT) |
 
 ---
 
@@ -67,8 +92,9 @@ Pin exact versions of three/gsap/lenis (APIs drift). The working reference imple
 2. **One RAF**. GSAP ticker drives Lenis; the WebGL loop is the only other RAF. Never add a third.
 3. **Pause** on `visibilitychange` (hidden) and when the canvas is off-screen (IntersectionObserver) if it's not fixed.
 4. **Dispose** every geometry, material, texture, render target and the renderer on teardown/HMR (`import.meta.hot.dispose`).
-5. **Code-split three**: `await import('./scene/stage.js')` after first paint; content is complete without WebGL.
-6. **Fallback**: no WebGL2 → `.no-webgl` CSS gradient; DOM `<h1>` is the accessible source, canvas `aria-hidden`.
+5. **Frames before three**: prefer a pre-rendered frame film (≤ ~4 MB for 120 × 1280px WebP). If three.js is truly needed,
+   code-split it (`await import()`) after first paint; content is complete without WebGL.
+6. **Fallback**: poster `<img>` under every canvas (frame 1 / product photo); DOM `<h1>` is the accessible source, canvas `aria-hidden`.
 7. **prefers-reduced-motion**: wrap all choreography in `gsap.matchMedia()`; reduced = no Lenis, no pin/scrub, no reveals,
    stage renders a still frame (redraw on scroll only). CSS: kill transitions/animations.
 8. **Animate transforms/opacity only**; use `ScrollTrigger.batch` for grids; `will-change` only on animated nodes.
@@ -118,21 +144,23 @@ each phase (what was done, screenshot if visual, what's next). **Ask before anyt
 
 ### Phase 3 — Design system
 - **Entry**: Phase 2 exit.
-- Do: moodboard from references; tokens (colour roles, type scale with clamp(), spacing, radii, easing curves,
+- Do: read `DESIGN-BAR.md`; pick the *subject* and its world; moodboard from Scrolltide/zip references; generate or source
+  the photography and the hero camera move first; tokens (colour roles, type scale with clamp(), spacing, radii, easing curves,
   durations); font pairing; motion principles (what moves, what never moves); component inventory; dark/light decision.
-- **Exit**: tokens in `src/style.css @theme`; a one-page style sample renders; contrast checked.
+- **Exit**: tokens in `src/styles/main.css @theme`; a one-page style sample renders; contrast checked; DESIGN-BAR self-check passes.
 
 ### Phase 4 — Scaffold
 - **Entry**: Phase 3 exit.
-- Do: copy `starter/` (or `npm create vite`), pin versions, folder layout (`src/scene`, `src/motion`, `src/lib`, `src/sections`),
+- Do: copy `starter/` (or `npm create vite`), pin versions, folder layout (`src/gl`, `src/motion`, `src/lib`, `src/sections`),
   ESLint, `vercel.json`, `.gitignore`, README; `git init`; empty sections with semantic HTML + real copy placeholders.
 - **Exit**: `npm run build` + `npm run lint` pass; page renders unstyled-but-complete with JS disabled.
 
-### Phase 5 — 3D scene
+### Phase 5 — Hero medium (film / photography / purposeful 3D)
 - **Entry**: Phase 4 exit.
-- Do: stage module (renderer, camera, resize, DPR cap, loop, dispose), models through gltf-transform, shaders in files,
-  pointer interaction, state object for GSAP, WebGL fallback, reduced-motion still frame.
-- **Exit**: hero renders at ≥ 50 fps desktop / acceptable on 390×844 swiftshader screenshot, 0 console errors, dispose verified on HMR.
+- Do: default = render or generate the camera move (image→video), extract frames (`ffmpeg -vf fps=15,scale=1280:-2 f%03d.webp`),
+  wire `film.js` (beats, focal crop, holds). Only if the subject needs real-time 3D: stage module (renderer, camera, DPR cap,
+  loop, dispose), gltf-transform models, art-directed lighting. Poster fallback and reduced-motion still frame either way.
+- **Exit**: hero is art-directed (no anti-pattern from DESIGN-BAR §3), renders at ≥ 50 fps desktop / acceptable on 390×844 swiftshader screenshot, 0 console errors, dispose verified on HMR.
 
 ### Phase 6 — Animation / scroll choreography
 - **Entry**: Phase 5 exit.

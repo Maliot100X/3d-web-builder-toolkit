@@ -64,3 +64,15 @@ src/index.css         tokens (light + dark), type scale, grab-ring cursor
 ## How to reuse
 `npm i && npm run dev`. To port the effect: copy `src/face/engine.ts` + FaceCanvas, replace the WebP set
 (keep identical framing), re-measure `rig` landmarks in UV space.
+
+## Re-study in the Scrolltide light (2026-11-25)
+This zip is Scrolltide's **free "Otis" hero template** (https://www.scrolltide.co/templates/otis). Its preview film is in
+`scrolltide/frames/otis-sheet.jpg`. What it actually teaches, ranked by what matters for the bar:
+1. **The interaction is the brand.** A designer's own face you can pull like taffy. The WebGL serves the person
+   and is never decoration. Its real lesson is to pick a subject and make the effect *about* it.
+2. **Editorial composition.** A three-column hero (bio, portrait, mood and newsletter), a press strip pinned to the bottom,
+   a mustard marker behind the name, and micro-labels. It is quiet around a single loud element.
+3. **Type and palette restraint.** Fog page, ink, one cobalt disc and one mustard accent; Satoshi with an Instrument Serif accent.
+4. **Craft**: the fitted headline, alpha-map hit testing, spring physics and the accessible hit layer.
+Gap vs the rest of Scrolltide: no scroll storytelling (single-screen hero) and no reduced-motion branch.
+The `starter/` takes 2–4 from here and the scroll-film/storytelling from NAÏADE and SELENE.

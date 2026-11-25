@@ -2,122 +2,98 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { splitWords } from './split.js';
 
-gsap.registerPlugin(ScrollTrigger);
-
 /**
- * All scroll choreography lives here, inside gsap.matchMedia() so that
- *  - reduced-motion users get static, fully visible content
- *  - desktop / mobile get different pin logic
- * and everything reverts cleanly (mm.revert()) on HMR or teardown.
+ * Everything below the film. All inside gsap.matchMedia so reduced-motion users
+ * get the finished page and every tween/trigger reverts on teardown.
  */
-export function initChoreography({ stage }) {
+export function initChoreography() {
   const mm = gsap.matchMedia();
 
-  mm.add(
-    { motion: '(prefers-reduced-motion: no-preference)', desktop: '(min-width: 768px)' },
-    (ctx) => {
-      const { motion, desktop } = ctx.conditions;
-      if (!motion) {
-        // Reduced motion: no smooth scroll, no scrub, no reveals. The stage is a still
-        // image whose poster simply fades out as you leave the hero (one redraw per scroll).
-        gsap.set('[data-reveal], .w', { clearProps: 'all' });
-        if (!stage) return;
-        const onScroll = () => {
-          const p = Math.min(1, window.scrollY / window.innerHeight);
-          stage.state.posterOpacity = 1 - p;
-          stage.state.blobScale = desktop ? 0.78 - p * 0.2 : 0.62;
-          stage.renderOnce();
-        };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        return () => window.removeEventListener('scroll', onScroll);
-      }
+  mm.add({ motion: '(prefers-reduced-motion: no-preference)', desktop: '(min-width: 900px)' }, (c) => {
+    const { motion, desktop } = c.conditions;
+    if (!motion) return;
 
-      // 1. Hero intro timeline (loader-style entrance: norrav Loader / Otis header)
-      const intro = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.2 } });
-      intro
-        .from('.site-nav > *', { y: -24, autoAlpha: 0, stagger: 0.06 })
-        .from('.hero-copy > *', { y: 40, autoAlpha: 0, stagger: 0.08 }, '<0.1')
-        .from('.scroll-cue', { autoAlpha: 0, y: 10 }, '<0.4');
-      if (stage) intro.from(stage.state, { blobScale: 0.2, distort: 0.9, duration: 2.2 }, 0);
+    // Masked line rises (headings outside the hero)
+    gsap.utils.toArray('main section:not(.film) .line-mask > span').forEach((line) => {
+      gsap.from(line, { yPercent: 108, duration: 1.25, ease: 'expo.out', scrollTrigger: { trigger: line, start: 'top 90%', once: true } });
+    });
 
-      // 2. Whole-page progress → 3D stage state (one scrubbed timeline = one source of truth)
-      if (stage) {
-        gsap.timeline({
-          scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1.2 },
-        })
-          .to(stage.state, { progress: 1, hue: 0.6, ease: 'none', duration: 1 }, 0)
-          .to(stage.state, { posterOpacity: 0, ease: 'power1.in', duration: 0.12 }, 0)
-          .to(stage.state, { blobX: desktop ? -1.1 : 0.2, blobY: desktop ? -0.35 : 1.1, blobScale: desktop ? 0.55 : 0.45, duration: 0.25 }, 0.05)
-          .to(stage.state, { blobX: desktop ? 1.1 : -0.2, blobY: desktop ? 0.2 : -1.2, distort: 0.42, blobScale: desktop ? 0.7 : 0.5, duration: 0.3 }, 0.35)
-          .to(stage.state, { blobX: desktop ? 0.85 : 0, blobY: desktop ? 0.15 : 0.9, distort: 0.18, blobScale: desktop ? 0.9 : 0.6, duration: 0.3 }, 0.7);
-      }
+    // Manifesto: words rise in reading order as the paragraph crosses the viewport
+    document.querySelectorAll('[data-words]').forEach((p) => {
+      const words = splitWords(p);
+      gsap.from(words, { yPercent: 110, opacity: 0, ease: 'none', stagger: 0.04, scrollTrigger: { trigger: p, start: 'top 82%', end: 'bottom 55%', scrub: 0.6 } });
+    });
 
-      // 3. Manifesto: word-by-word scrubbed opacity (gentlerain / Awwwards staple)
-      document.querySelectorAll('[data-split-scrub]').forEach((el) => {
-        const words = splitWords(el);
-        gsap.fromTo(words, { opacity: 0.12 }, {
-          opacity: 1, stagger: 0.05, ease: 'none',
-          scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 40%', scrub: true },
-        });
+    // Product cards: rise + image settles from 1.12 scale
+    gsap.utils.toArray('[data-reveal]').forEach((card) => {
+      const img = card.querySelector('img');
+      gsap.set(card, { y: 80, autoAlpha: 0 });
+      ScrollTrigger.create({
+        trigger: card, start: 'top 88%', once: true,
+        onEnter: () => {
+          gsap.to(card, { y: 0, autoAlpha: 1, duration: 1.2, ease: 'expo.out' });
+          if (img) gsap.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 1.6, ease: 'expo.out' });
+        },
       });
+    });
 
-      // 4. Masked line-rise headings
-      document.querySelectorAll('[data-split-rise]').forEach((el) => {
-        const words = splitWords(el);
-        gsap.from(words, {
-          yPercent: 110, duration: 1, ease: 'expo.out', stagger: 0.04,
-          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-        });
+    // Process: pinned storytelling — each chapter wipes its image up from the bottom
+    if (desktop) {
+      const imgs = gsap.utils.toArray('[data-proc-img]');
+      const num = document.querySelector('[data-proc-num]');
+      imgs.forEach((frame, i) => {
+        if (i === 0) return;
+        gsap.set(frame, { clipPath: 'inset(100% 0% 0% 0%)' });
+        const step = document.querySelector(`[data-proc-step="${i}"]`);
+        gsap.timeline({ scrollTrigger: { trigger: step, start: 'top bottom', end: 'top top', scrub: true } })
+          .to(frame, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none' }, 0)
+          .fromTo(frame.querySelector('img'), { scale: 1.25, yPercent: 8 }, { scale: 1, yPercent: 0, ease: 'none' }, 0)
+          .to(imgs[i - 1].querySelector('img'), { scale: 0.92, yPercent: -6, ease: 'none' }, 0);
       });
-
-      // 5. Pinned horizontal gallery (Lagunitas pin+scrub, 0xAllan Showcase)
-      const track = document.querySelector('.h-track');
-      if (track && desktop) {
-        const distance = () => track.scrollWidth - window.innerWidth + 64;
-        gsap.to(track, {
-          x: () => -distance(), ease: 'none',
-          scrollTrigger: {
-            trigger: '.h-pin', start: 'top top', end: () => '+=' + distance(),
-            pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1,
-          },
-        });
-      }
-
-      // 6. Batch reveals for cards/grids (cheaper than one trigger per element)
-      gsap.set('[data-reveal]', { y: 48, autoAlpha: 0 });
-      ScrollTrigger.batch('[data-reveal]', {
-        start: 'top 88%',
-        once: true,
-        onEnter: (els) => gsap.to(els, { y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08, overwrite: true }),
+      gsap.utils.toArray('[data-proc-step]').forEach((step, i) => {
+        ScrollTrigger.create({ trigger: step, start: 'top 55%', end: 'bottom 55%', onToggle: (s) => { if (s.isActive) num.textContent = `0${i + 1}`; } });
       });
+    }
 
-      // 7. Counters
-      document.querySelectorAll('[data-count]').forEach((el) => {
-        const end = parseFloat(el.dataset.count);
-        const obj = { v: 0 };
-        gsap.to(obj, {
-          v: end, duration: 1.8, ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-          onUpdate: () => { el.textContent = Math.round(obj.v).toLocaleString(); },
-        });
+    // Atelier: the photograph opens from a window into full bleed, then drifts (parallax)
+    const win = document.querySelector('[data-window]');
+    if (win) {
+      gsap.fromTo(win, { clipPath: desktop ? 'inset(12% 22% 12% 22% round 28px)' : 'inset(8% 6% 8% 6% round 20px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: { trigger: win, start: 'top 90%', end: 'top 10%', scrub: true } });
+      gsap.fromTo('[data-parallax]', { yPercent: -7 }, { yPercent: 7, ease: 'none', scrollTrigger: { trigger: win, start: 'top bottom', end: 'bottom top', scrub: true } });
+    }
+
+    // Wordmark: letters rise like type set in a forme
+    const fit = document.querySelector('[data-fit]');
+    if (fit) {
+      const letters = fit.textContent.split('');
+      fit.textContent = '';
+      letters.forEach((ch) => {
+        const m = document.createElement('span'); m.className = 'w-mask';
+        const s = document.createElement('span'); s.className = 'w'; s.textContent = ch;
+        m.appendChild(s); fit.appendChild(m);
       });
+      gsap.from(fit.querySelectorAll('.w'), { yPercent: 100, duration: 1.4, ease: 'expo.out', stagger: 0.05, scrollTrigger: { trigger: fit, start: 'top 92%', once: true } });
+    }
+  });
 
-      // 8. Velocity-reactive marquee
-      const marquee = document.querySelector('.marquee-inner');
-      if (marquee) {
-        const loop = gsap.to(marquee, { xPercent: -50, ease: 'none', duration: 22, repeat: -1 });
-        ScrollTrigger.create({
-          onUpdate: (self) => {
-            const v = gsap.utils.clamp(-6, 6, self.getVelocity() / 300);
-            gsap.to(loop, { timeScale: self.direction * Math.max(1, Math.abs(v)), duration: 0.3, overwrite: true });
-          },
-        });
-      }
-    },
-  );
-
-  // fonts change metrics → refresh pins once they land
   document.fonts?.ready.then(() => ScrollTrigger.refresh());
   return () => mm.revert();
+}
+
+/** Size a single-line wordmark to its container width exactly (Otis / Scrolltide useFitText idea). */
+export function fitText(el) {
+  if (!el) return () => {};
+  const fit = () => {
+    el.style.fontSize = '100px';
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const w = range.getBoundingClientRect().width;
+    if (w) el.style.fontSize = `${(100 * el.clientWidth * 0.98) / w}px`;
+  };
+  fit();
+  document.fonts?.ready.then(fit);
+  const ro = new ResizeObserver(fit);
+  ro.observe(el.parentElement);
+  return () => ro.disconnect();
 }

@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+await ctx.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'https://www.scrolltide.co' });
+const p = await ctx.newPage();
+await p.goto('https://www.scrolltide.co/templates/selene', { waitUntil: 'networkidle' });
+await p.waitForTimeout(1500);
+console.log(await p.evaluate(() => [...document.querySelectorAll('button,a')].map(e => e.innerText.trim()).filter(t => /prompt|source|copy|download|free|sign/i.test(t)).join(' | ')));
+const btn = p.locator('button', { hasText: /prompt/i }).first();
+await btn.click().catch(e => console.log('err', e.message.slice(0, 80)));
+await p.waitForTimeout(3000);
+console.log('url', p.url(), (await p.evaluate(() => navigator.clipboard.readText().catch(() => ''))).length);
+console.log((await p.evaluate(() => document.body.innerText)).slice(0, 600));
+await p.screenshot({ path: '/tmp/selene-after.png' });
+await b.close();

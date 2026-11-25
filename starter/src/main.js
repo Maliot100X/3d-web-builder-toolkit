@@ -1,43 +1,40 @@
-import './style.css';
-import 'lenis/dist/lenis.css';
-import { createIcons, ArrowRight, ArrowUpRight, Sparkles, Box, Waves, Gauge, Accessibility, Github, Mail, MousePointer2 } from 'lucide';
-import { hasWebGL2, prefersReducedMotion } from './lib/env.js';
-import { initSmoothScroll } from './motion/smooth-scroll.js';
-import { initChoreography } from './motion/choreography.js';
+import './styles/main.css';
+import { gsap } from 'gsap';
+import { reducedMotion } from './lib/env.js';
+import { startScroll, scrollToTarget } from './motion/scroll.js';
+import { initFilm } from './motion/film.js';
+import { initChoreography, fitText } from './motion/choreography.js';
+import { initTransitions } from './motion/transitions.js';
+import { initHoverDistort } from './gl/hover-distort.js';
+import { createPreloader } from './ui/preloader.js';
+import { initCommerce } from './ui/commerce.js';
 
-createIcons({ icons: { ArrowRight, ArrowUpRight, Sparkles, Box, Waves, Gauge, Accessibility, Github, Mail, MousePointer2 } });
+const reduced = reducedMotion();
+document.documentElement.classList.toggle('reduced', reduced);
 
-const reduced = prefersReducedMotion();
-const canvas = document.querySelector('#stage');
-let stage = null;
-let teardown = [];
+const preloader = createPreloader({ reduced });
+startScroll(reduced);
+initFilm({ reduced, onProgress: preloader.progress });
+fitText(document.querySelector('[data-fit]'));
+initChoreography();
+initTransitions({ reduced });
+initCommerce({ reduced });
+if (!reduced && window.matchMedia('(pointer: fine)').matches) initHoverDistort();
 
-async function boot() {
-  // WebGL is progressive enhancement: the page is complete without it.
-  if (canvas && hasWebGL2()) {
-    try {
-      const { createStage } = await import('./scene/stage.js'); // code-split three.js
-      await document.fonts?.load('700 100px "Chakra Petch"').catch(() => {});
-      stage = createStage(canvas, { title: document.body.dataset.title || 'HYPERFORM', kicker: document.body.dataset.kicker || '3D web studio', reduced });
-      document.documentElement.classList.add('has-webgl');
-      teardown.push(() => stage.dispose());
-    } catch (err) {
-      console.warn('[stage] WebGL init failed, using CSS fallback', err);
-      document.documentElement.classList.add('no-webgl');
-    }
-  } else {
-    document.documentElement.classList.add('no-webgl');
-  }
+// In-page anchors go through Lenis so the smooth clock never fights native jumps
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href');
+    const target = id === '#' || id === '#top' ? 0 : document.querySelector(id);
+    if (target === null) return;
+    e.preventDefault();
+    scrollToTarget(target);
+  });
+});
 
-  if (!reduced) teardown.push(initSmoothScroll());
-  teardown.push(initChoreography({ stage }));
-  document.documentElement.classList.add('is-ready');
-}
-
-boot();
-
-document.querySelector('#year')?.replaceChildren(String(new Date().getFullYear()));
-
-if (import.meta.hot) {
-  import.meta.hot.dispose(() => { teardown.forEach((fn) => fn()); teardown = []; });
-}
+// Hero entrance after the preloader lifts
+preloader.ready.then(() => {
+  if (reduced) return;
+  gsap.from('[data-hero-copy] .line-mask > span', { yPercent: 110, duration: 1.4, ease: 'expo.out', stagger: 0.09, delay: 0.25 });
+  gsap.from('[data-hero-copy] [data-rise], [data-scroll-cue]', { y: 18, opacity: 0, duration: 1.1, ease: 'expo.out', delay: 0.5, stagger: 0.1 });
+});

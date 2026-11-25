@@ -1,21 +1,24 @@
-// Minimal, accessible word splitter (free alternative to SplitText for simple reveals).
-// Keeps the original text in aria-label so screen readers read one sentence, not N spans.
+/** Accessible word split: the parent keeps the sentence in aria-label; spans are aria-hidden. */
 export function splitWords(el) {
-  if (el.dataset.split) return el.querySelectorAll('.w');
-  const text = el.textContent.trim().replace(/\s+/g, ' ');
-  el.setAttribute('aria-label', text);
+  if (el.dataset.split) return [...el.querySelectorAll('.w')];
+  const nodes = [...el.childNodes];
+  el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
   el.textContent = '';
-  text.split(' ').forEach((word, i, arr) => {
-    const outer = document.createElement('span');
-    outer.className = 'w-mask';
-    outer.setAttribute('aria-hidden', 'true');
-    const inner = document.createElement('span');
-    inner.className = 'w';
-    inner.textContent = word;
-    outer.appendChild(inner);
-    el.appendChild(outer);
-    if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
+  const add = (word, italic) => {
+    const mask = document.createElement('span');
+    mask.className = 'w-mask';
+    mask.setAttribute('aria-hidden', 'true');
+    const w = document.createElement(italic ? 'em' : 'span');
+    w.className = 'w';
+    w.textContent = word;
+    mask.appendChild(w);
+    el.appendChild(mask);
+    el.appendChild(document.createTextNode(' '));
+  };
+  nodes.forEach((n) => {
+    const italic = n.nodeType === 1 && n.tagName === 'EM';
+    n.textContent.trim().split(/\s+/).filter(Boolean).forEach((word) => add(word, italic));
   });
   el.dataset.split = '1';
-  return el.querySelectorAll('.w');
+  return [...el.querySelectorAll('.w')];
 }
